@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SuperCesiApi.Data;
+using SuperCesiApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -57,6 +58,9 @@ using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 var context = services.GetRequiredService<SuperCesiApiDbContext>();
 context.Database.Migrate();
+
+IncidentTypeSeeder.Seed(context);
+RoleSeeder.Seed(context);
 
 app.UseAuthentication();
 

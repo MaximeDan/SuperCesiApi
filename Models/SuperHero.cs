@@ -7,7 +7,6 @@ public class SuperHero
     public double Latitude { get; set; }
     public double Longitude { get; set; }
     public string PhoneNumber { get; set; }
-    
-    public List<Incident> Incidents { get; set; }
+    public ICollection<IncidentType> IncidentTypes { get; set; }
 
 }

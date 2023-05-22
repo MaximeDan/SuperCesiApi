@@ -13,63 +13,53 @@ public class SuperCesiApiDbContext : IdentityDbContext
     }
 
     public DbSet<SuperHero> SuperHeroes { get; set; }
-    public DbSet<City> Cities { get; set; }
     public DbSet<Incident> Incidents { get; set; }
+    public DbSet<IncidentType> IncidentTypes { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<SuperHero>(entity =>
         {
             entity.ToTable(nameof(SuperHero));
             entity.HasKey(e => e.Id);
-            entity.HasMany(s => s.Incidents)
+            entity.HasMany(s => s.IncidentTypes)
                 .WithMany(i => i.SuperHeroes)
                 .UsingEntity<Dictionary<string, object>>(
-                    "SuperheroIncident",
+                    "SuperHeroIncidentType",
                     j => j
-                        .HasOne<Incident>()
+                        .HasOne<IncidentType>()
                         .WithMany()
-                        .HasForeignKey("IncidentId")
-                        .HasConstraintName("FK_SuperheroIncident_Incidents_IncidentId")
+                        .HasForeignKey("IncidentTypeId")
+                        .HasConstraintName("FK_SuperHeroIncidentType_IncidentTypes_IncidentTypeId")
                         .OnDelete(DeleteBehavior.Cascade),
                     j => j
                         .HasOne<SuperHero>()
                         .WithMany()
-                        .HasForeignKey("SuperheroId")
-                        .HasConstraintName("FK_SuperheroIncident_Superheroes_SuperheroId")
+                        .HasForeignKey("SuperHeroId")
+                        .HasConstraintName("FK_SuperHeroIncidentType_SuperHeroes_SuperHeroId")
                         .OnDelete(DeleteBehavior.Cascade),
                     j =>
                     {
-                        j.HasKey("SuperheroId", "IncidentId");
-                        j.ToTable("SuperheroIncident");
-                    });
+                        j.HasKey("SuperHeroId", "IncidentTypeId");
+                        j.ToTable("SuperHeroIncidentType");
+                    }
+                );
         });
-
 
         builder.Entity<Incident>(entity =>
         {
             entity.ToTable(nameof(Incident));
             entity.HasKey(k => k.Id);
-
-            entity.HasOne(i => i.City)
-                .WithMany(c => c.Incidents)
-                .HasForeignKey(i => i.CityId)
-                .HasConstraintName("FK_Incidents_Cities_CityId")
-                .OnDelete(DeleteBehavior.Cascade);
-
-            entity.HasMany(i => i.SuperHeroes)
-                .WithMany(s => s.Incidents)
-                .UsingEntity(j => j.ToTable("SuperHeroIncidents"));
+            
+            entity.HasOne(i => i.IncidentType)
+                .WithMany()
+                .HasForeignKey(i => i.IncidentTypeId);
         });
-
-
-        builder.Entity<City>(entity =>
-        {
-            entity.ToTable(nameof(City));
-            entity.HasKey(k => k.Id);
-        });
-
-
+        
         builder.Entity<IdentityUser>(b =>
         {
             // Primary key
