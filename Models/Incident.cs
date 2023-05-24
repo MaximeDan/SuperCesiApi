@@ -1,4 +1,6 @@
-﻿namespace SuperCesiApi.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace SuperCesiApi.Models;
 
 public class Incident
 {
@@ -7,6 +9,8 @@ public class Incident
     public double Longitude { get; set; }
     public bool IsResolved { get; set; }
     public int IncidentTypeId { get; set; }
-    public string City { get; set; }
-    public IncidentType IncidentType { get; set; }
+    public string? City { get; set; }
+    
+    [JsonIgnore]
+    public IncidentType? IncidentType { get; set; }
 }

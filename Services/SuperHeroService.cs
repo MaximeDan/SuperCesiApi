@@ -7,7 +7,7 @@ namespace SuperCesiApi.Services;
 /// <summary>
 /// Service class for handling SuperHero-related operations.
 /// </summary>
-public abstract class SuperHeroService
+public class SuperHeroService
 {
     private readonly SuperCesiApiDbContext _dbContext;
     

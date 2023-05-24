@@ -4,14 +4,14 @@ using SuperCesiApi.Data;
 namespace SuperCesiApi.Models;
 
 /// <summary>
-/// 
+/// A seeder class to populate the roles in the database.
 /// </summary>
 public class RoleSeeder
 {
     /// <summary>
-    /// 
+    /// Seeds the roles in the specified database context.
     /// </summary>
-    /// <param name="context"></param>
+    /// <param name="context">The database context.</param>
     public static void Seed(SuperCesiApiDbContext context)
     {
         // Check if incidents already exist in the database

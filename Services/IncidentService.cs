@@ -30,7 +30,7 @@ public class IncidentService
     {
         var existingIncident = await _dbContext.Incidents.FirstOrDefaultAsync(i => i.Id == incident.Id);
 
-        if (existingIncident is null)
+        if (existingIncident is not null)
         {
             return new ActionResponse(StatusCodes.Status409Conflict, "An incident has already been opened");
         }
@@ -54,9 +54,15 @@ public class IncidentService
     /// Retrieves all incidents.
     /// </summary>
     /// <returns>A collection of incidents.</returns>
-    public async Task<ICollection<Incident>> GetAllIncident()
+    public async Task<ActionResponse> GetAllIncident()
     {
-        return _dbContext.Incidents.ToList();
+        var incidents = _dbContext.Incidents.ToList();
+        if (incidents.Count > 0)
+        {
+            return new ActionResponse(StatusCodes.Status200OK, incidents);
+        }
+        
+        return new ActionResponse(StatusCodes.Status204NoContent);
     }
 
     /// <summary>

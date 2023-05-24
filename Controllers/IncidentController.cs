@@ -23,13 +23,26 @@ public class IncidentController : Controller
     }
 
 
-    [HttpPost]
-    public async Task<ICollection<Incident>> GetAllIncident()
+    [HttpPost("GetAll")]
+    public async Task<IActionResult> GetAllIncident()
     {
-        var result = _incidentService.GetAllIncident();
+        var result = await _incidentService.GetAllIncident();
+
+        if (result.StatusCode == StatusCodes.Status200OK)
+        {
+            return Ok(result.Object);
+        }
+        
+        if (result.StatusCode == StatusCodes.Status204NoContent)
+        {
+            return NoContent();
+        }
+        
+        // Return a BadRequestObjectResult with the error message
+        return BadRequest(result.Message);
     }
     
-    [HttpPost]
+    [HttpPost("Get/{id}")]
     public async Task<IActionResult> GetIncident(int id)
     {
         var result = await _incidentService.GetIncident(id);
@@ -54,7 +67,7 @@ public class IncidentController : Controller
     /// </summary>
     /// <param name="incident">The incident object containing the details of the new incident.</param>
     /// <returns>An IActionResult representing the result of the operation.</returns>
-    [HttpPost]
+    [HttpPost("Create")]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
     public async Task<IActionResult> CreateIncident(Incident incident)

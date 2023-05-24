@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SuperCesiApi.Data;
 using SuperCesiApi.Models;
+using SuperCesiApi.Services;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,11 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<SuperCesiApiDbContext>();
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddCors();
+
+builder.Services.AddTransient<IncidentTypeService>();
+builder.Services.AddTransient<IncidentService>();
+builder.Services.AddTransient<SuperHeroService>();
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -63,6 +69,12 @@ IncidentTypeSeeder.Seed(context);
 RoleSeeder.Seed(context);
 
 app.UseAuthentication();
+
+app.UseCors(options => options
+        .AllowAnyOrigin() // Allow requests from any origin
+        .AllowAnyMethod() // Allow any HTTP method
+        .AllowAnyHeader() // Allow any HTTP headers
+);
 
 app.UseSwagger();
 app.UseSwaggerUI(c =>

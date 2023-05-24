@@ -1,4 +1,6 @@
-﻿namespace SuperCesiApi.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace SuperCesiApi.Models;
 
 public class SuperHero
 {
@@ -7,6 +9,8 @@ public class SuperHero
     public double Latitude { get; set; }
     public double Longitude { get; set; }
     public string PhoneNumber { get; set; }
+    
+    [JsonIgnore]
     public ICollection<IncidentType> IncidentTypes { get; set; }
 
 }
