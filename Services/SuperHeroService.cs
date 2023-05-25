@@ -41,9 +41,18 @@ public class SuperHeroService
             Latitude = superHero.Latitude,
             Longitude = superHero.Longitude,
             PhoneNumber = superHero.PhoneNumber,
-            IncidentTypes = superHero.IncidentTypes
+            IncidentTypes = new List<IncidentType>() 
         };
 
+        foreach (var incidentType in superHero.IncidentTypes)
+        {
+            var incidentTypeDb = await _dbContext.IncidentTypes.FindAsync(incidentType.Id);
+            if (incidentTypeDb != null)
+            {
+                newSuperHero.IncidentTypes.Add(incidentTypeDb);
+            }
+        }
+        
         // Add the new superhero to the database
         _dbContext.SuperHeroes.Add(newSuperHero);
 

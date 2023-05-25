@@ -71,9 +71,9 @@ RoleSeeder.Seed(context);
 app.UseAuthentication();
 
 app.UseCors(options => options
-        .AllowAnyOrigin() // Allow requests from any origin
-        .AllowAnyMethod() // Allow any HTTP method
-        .AllowAnyHeader() // Allow any HTTP headers
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader()   
 );
 
 app.UseSwagger();
