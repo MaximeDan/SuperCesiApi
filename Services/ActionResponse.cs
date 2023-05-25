@@ -1,6 +1,5 @@
 ﻿namespace SuperCesiApi.Services;
 
-
 public class ActionResponse
 {
     public int StatusCode { get; set; }
