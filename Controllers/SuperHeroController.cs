@@ -43,4 +43,22 @@ public class SuperHeroController : ControllerBase
         return BadRequest(result.Message);
     }
     
+    
+    /// <summary>
+    /// Retrieves all superheroes from the system.
+    /// </summary>
+    /// <returns>An <see cref="IActionResult"/> representing the result of the operation.</returns>
+    [HttpPost("getall")]
+    public async Task<IActionResult> GetAllSuperHero()
+    {
+        var result = await _superHeroService.GetAllSuperHero();
+
+        if (result.StatusCode == StatusCodes.Status200OK)
+        {
+            return Ok(result.Object);
+        }
+        
+        return BadRequest(result.Message);
+    }
+    
 }

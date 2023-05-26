@@ -23,7 +23,7 @@ public class IncidentController : Controller
     }
 
 
-    [HttpPost("GetAll")]
+    [HttpPost("getall")]
     public async Task<IActionResult> GetAllIncident()
     {
         var result = await _incidentService.GetAllIncident();
@@ -42,7 +42,7 @@ public class IncidentController : Controller
         return BadRequest(result.Message);
     }
     
-    [HttpPost("Get/{id}")]
+    [HttpPost("get/{id}")]
     public async Task<IActionResult> GetIncident(int id)
     {
         var result = await _incidentService.GetIncident(id);
@@ -67,7 +67,7 @@ public class IncidentController : Controller
     /// </summary>
     /// <param name="incident">The incident object containing the details of the new incident.</param>
     /// <returns>An IActionResult representing the result of the operation.</returns>
-    [HttpPost("Create")]
+    [HttpPost("create")]
     [ProducesResponseType(200)]
     [ProducesResponseType(400)]
     public async Task<IActionResult> CreateIncident(Incident incident)

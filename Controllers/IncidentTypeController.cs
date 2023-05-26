@@ -25,7 +25,7 @@ public class IncidentTypeController : ControllerBase
     /// Retrieves all incident types.
     /// </summary>
     /// <returns>A collection of incident types.</returns>
-    [HttpPost("GetAll")]
+    [HttpPost("getall")]
     public async Task<IActionResult> GetAllIncident()
     {
         var result = await _incidentTypeService.GetAllIncidentTypes();

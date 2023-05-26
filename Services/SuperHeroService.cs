@@ -107,4 +107,19 @@ public class SuperHeroService
         
         return new ActionResponse(StatusCodes.Status200OK, "Super Hero updated successfully");
     }
+
+    /// <summary>
+    /// Retrieves all super heroes from the database.
+    /// </summary>
+    /// <returns>A task representing the asynchronous operation. The task result contains an <see cref="ActionResponse"/> indicating the status and the list of super heroes.</returns>
+    public async Task<ActionResponse> GetAllSuperHero()
+    {
+        var superHeroes = _dbContext.SuperHeroes.Include(i => i.IncidentTypes).ToList();
+        if (superHeroes.Count > 0)
+        {
+            return new ActionResponse(StatusCodes.Status200OK, superHeroes);
+        }
+        
+        return new ActionResponse(StatusCodes.Status204NoContent);
+    }
 }
